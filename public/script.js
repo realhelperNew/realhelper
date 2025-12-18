@@ -69,4 +69,48 @@ document.addEventListener('DOMContentLoaded', () => {
   function startAuto(){ if(autoInt) clearInterval(autoInt); autoInt = setInterval(()=>{ nextBtn.click(); }, 4000); }
 
   loadTestimonials();
+
+  // Request form handling
+  const reqForm = document.getElementById('request-form');
+  const reqResult = document.getElementById('request-result');
+  if (reqForm){
+    reqForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      reqResult.textContent = '';
+      const name = document.getElementById('r-name').value.trim();
+      const email = document.getElementById('r-email').value.trim();
+      const budget = document.getElementById('r-budget').value.trim();
+      const timing = document.getElementById('r-timing').value.trim();
+      const location = document.getElementById('r-location').value.trim();
+      const details = document.getElementById('r-details').value.trim();
+      const desired = document.getElementById('r-desired').value.trim();
+      const undesired = document.getElementById('r-undesired').value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+        reqResult.textContent = 'الرجاء إدخال بريد إلكتروني صالح للمتابعة';
+        return;
+      }
+      const sends = Array.from(reqForm.querySelectorAll('input[name="send_to"]:checked')).map(n=>n.value);
+      const payload = { email, name, budget, timing, location, details, desired_details: desired, undesired_details: undesired, send_to: sends };
+      try{
+        const r = await fetch('/api/request', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
+        const data = await r.json();
+        if (!data.ok) return reqResult.textContent = data.error || 'فشل إرسال الطلب';
+        // show links
+        const links = data.links || {};
+        const parts = [];
+        if (links.whatsapp) parts.push(`<a href="${links.whatsapp}" target="_blank" rel="noopener">مشاركة عبر واتساب</a>`);
+        if (links.telegram) parts.push(`<a href="${links.telegram}" target="_blank" rel="noopener">مشاركة عبر تلغرام</a>`);
+        if (links.twitter) parts.push(`<a href="${links.twitter}" target="_blank" rel="noopener">مشاركة عبر تويتر</a>`);
+        if (links.tiktok) parts.push(`<div><strong>تيك توك:</strong><div>${links.tiktok.note}</div><pre style="white-space:pre-wrap">${escapeHtml(links.tiktok.text)}</pre></div>`);
+        reqResult.innerHTML = parts.length ? parts.join(' · ') : 'تم حفظ الطلب بنجاح';
+        reqForm.reset();
+      }catch(err){
+        reqResult.textContent = 'فشل الاتصال بالخادم';
+      }
+    });
+  }
+
+  function escapeHtml(s){
+    return s.replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
 });

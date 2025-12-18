@@ -75,20 +75,31 @@ npm run dev
 ```
 
 نقاط نهاية API المتاحة (تجريبية):
-- `POST /api/subscribe`  — سجل بريدًا إلكترونيًا (جسم: { "email": "..." })
+- `POST /api/subscribe`  — سجل ملف تعريف مستخدم بسيط (جسم: { "email": "...", "name": "..." })
 - `GET /api/testimonials` — استرجاع شهادات اختبارية
+- `POST /api/request` — أرسل طلبًا مفصلاً (جسم مثال):
 
-ملاحظة: المشتركين الآن يُخزَّنُون في قاعدة بيانات SQLite محلية (`data.db`). هناك تكامل اختياري مع SendGrid لإرسال رسائل تأكيد إذا وضعت متغير البيئة `SENDGRID_API_KEY`.
-
-بيئة اختيارية:
-
-- `SENDGRID_API_KEY` — مفتاح API الخاص بـ SendGrid لإرسال تأكيدات البريد.
-- `SENDGRID_FROM` — البريد المُرسِل الافتراضي (مثل `noreply@yourdomain.com`).
-
-لتشغيل مع SendGrid (اختياري):
-
-```bash
-export SENDGRID_API_KEY=your_key_here
-export SENDGRID_FROM=you@domain.com
-npm start
+```json
+{
+	"email": "user@example.com",
+	"name": "اسم المستخدم",
+	"budget": "$200",
+	"timing": "خلال أسبوع",
+	"location": "الرياض",
+	"details": "وصف تفصيلي للطلب",
+	"desired_details": "تفاصيل مطلوبة",
+	"undesired_details": "تفاصيل غير مرغوبة",
+	"send_to": ["whatsapp","telegram","twitter","tiktok"]
+}
 ```
+
+التخزين المحلي:
+- الآن يتم حفظ بيانات المستخدمين محليًا في مجلد `data/users/` حيث يُنشأ ملف مجلد منفصل لكل مستخدم (مُعرف بواسطة البريد الإلكتروني مُرمّزًا) ويحتوي على `profile.json` ومجلد `requests/` يحتوي على ملفات JSON منفصلة لكل طلب (زمن الإنشاء كاسم ملف).
+
+مزايا:
+- كل طلب يُحفظ كملف مستقل داخل `data/users/<encoded-email>/requests/<timestamp>.json`.
+- عند إرسال الطلب مع خيار المشاركة، تعيد الـ API روابط جاهزة للواتساب/تلغرام/تويتر، ونصًا قابلاً للنسخ لتطبيق تيك توك.
+
+بيئة اختيارية (بقايا دعم SendGrid):
+- `SENDGRID_API_KEY` — إذا ضبطته فسيحاول الخادم إرسال رسالة تأكيد عند الاشتراك (الحزمة تُحمّل شرطياً إذا كانت متاحة).
+- `SENDGRID_FROM` — البريد المرسل الافتراضي.

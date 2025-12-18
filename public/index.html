@@ -42,6 +42,31 @@
       </article>
     </section>
 
+    <section class="request-section" style="margin-top:2rem">
+      <h2>أرسل طلبًا مفصلاً</h2>
+      <form id="request-form" class="subscribe" novalidate>
+        <input id="r-name" name="name" type="text" placeholder="الاسم (اختياري)" />
+        <input id="r-email" name="email" type="email" placeholder="بريدك الإلكتروني" required />
+        <input id="r-budget" name="budget" type="text" placeholder="الميزانية (مثلاً: $200)" />
+        <input id="r-timing" name="timing" type="text" placeholder="التوقيت (مثلاً: خلال أسبوع)" />
+        <input id="r-location" name="location" type="text" placeholder="المكان (اختياري)" />
+        <textarea id="r-details" name="details" rows="4" placeholder="وصف الطلب التفصيلي"></textarea>
+        <input id="r-desired" name="desired_details" type="text" placeholder="التفاصيل الإضافية المرغوبة" />
+        <input id="r-undesired" name="undesired_details" type="text" placeholder="التفاصيل الإضافية غير المرغوبة" />
+
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem">
+          <label><input type="checkbox" name="send_to" value="whatsapp" /> واتساب</label>
+          <label><input type="checkbox" name="send_to" value="telegram" /> تلغرام</label>
+          <label><input type="checkbox" name="send_to" value="twitter" /> تويتر</label>
+          <label><input type="checkbox" name="send_to" value="tiktok" /> تيك توك</label>
+        </div>
+
+        <button type="submit">إرسال الطلب ومشاركة</button>
+      </form>
+
+      <div id="request-result" style="margin-top:1rem"></div>
+    </section>
+
     <section class="testimonials">
       <h2>ماذا يقول العملاء</h2>
       <div class="carousel" id="testi-carousel">
