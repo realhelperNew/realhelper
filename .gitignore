@@ -3,3 +3,14 @@ node_modules/
 .DS_Store
 npm-debug.log
 coverage/
+
+# Sensitive local data
+data/users/
+/tmp/realhelper.log
+
+# Common secret files
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets.json
