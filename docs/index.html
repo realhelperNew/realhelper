@@ -3,7 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0ea5a4" />
   <title>RealHelper — صفحة هبوط</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
@@ -19,11 +23,11 @@
 
       <form id="subscribe-form" class="subscribe" novalidate>
         <input id="email" name="email" type="email" placeholder="أدخل بريدك الإلكتروني" required />
-        <button type="submit">سجل الآن</button>
+        <button type="submit" class="btn-primary">سجل الآن</button>
       </form>
 
-      <p id="subscribe-msg" class="muted"></p>
-      <div id="profile-area" style="margin-top:.5rem;font-weight:600"></div>
+      <p id="subscribe-msg" class="muted" aria-live="polite"></p>
+      <div id="profile-area" class="profile-area" aria-hidden="false"></div>
     </div>
   </header>
 
@@ -43,7 +47,7 @@
       </article>
     </section>
 
-    <section class="request-section" style="margin-top:2rem">
+    <section class="request-section">
       <h2>أرسل طلبًا مفصلاً</h2>
       <form id="request-form" class="subscribe" novalidate>
         <input id="r-name" name="name" type="text" placeholder="الاسم (اختياري)" />
@@ -55,17 +59,17 @@
         <input id="r-desired" name="desired_details" type="text" placeholder="التفاصيل الإضافية المرغوبة" />
         <input id="r-undesired" name="undesired_details" type="text" placeholder="التفاصيل الإضافية غير المرغوبة" />
 
-        <fieldset style="border:0;padding:0;margin-top:.5rem;display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
-          <legend style="font-weight:600;margin-bottom:.25rem;min-width:100%">قنوات المشاركة</legend>
+        <fieldset class="channels">
+          <legend>قنوات المشاركة</legend>
           <label><input type="checkbox" name="send_to" value="telegram" /> تلغرام</label>
           <label><input type="checkbox" name="send_to" value="twitter" /> تويتر</label>
           <label><input type="checkbox" name="send_to" value="tiktok" /> تيك توك</label>
         </fieldset>
 
-        <button type="submit">إرسال الطلب ومشاركة</button>
+        <button type="submit" class="btn-primary">إرسال الطلب ومشاركة</button>
       </form>
 
-      <div id="request-result" style="margin-top:1rem"></div>
+      <div id="request-result" class="request-result" role="status" aria-live="polite"></div>
     </section>
 
     <section class="testimonials">
@@ -80,7 +84,7 @@
 
   <footer class="footer">
     <div class="container">
-      <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+      <div class="contact-links">
         <div>تواصل معنا:</div>
         <a href="https://twitter.com/realhelper_nwo" target="_blank" rel="noopener">تويتر: @realhelper_nwo</a>
         <a href="https://t.me/R_realhelper" target="_blank" rel="noopener">تلغرام: R_realhelper</a>
@@ -90,6 +94,6 @@
     </div>
   </footer>
 
-  <script src="/script.js"></script>
+  <script src="/script.js" defer></script>
 </body>
 </html>
