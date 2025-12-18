@@ -41,3 +41,23 @@ input:focus, textarea:focus, button:focus{outline:3px solid rgba(14,165,164,.18)
 	.subscribe{flex-direction:column}
 	.btn-primary{width:100%}
 }
+
+/* Smooth scroll */
+html{scroll-behavior:smooth}
+
+/* Skip link (accessible) */
+.skip-link{
+  position:fixed;left:1rem;top:1rem;background:var(--surface);color:#064e47;padding:.5rem .75rem;border-radius:6px;box-shadow:0 4px 14px rgba(2,6,23,.08);transform:translateY(-120%);transition:transform .18s ease;z-index:60}
+.skip-link:focus{transform:translateY(0);outline:none}
+
+/* Toasts */
+.toast-container{position:fixed;left:1rem;bottom:1rem;display:flex;flex-direction:column;gap:.5rem;z-index:70}
+.toast{background:var(--surface);padding:.65rem .9rem;border-radius:8px;box-shadow:0 8px 30px rgba(2,6,23,.12);min-width:220px;color:#0b1220;border-left:4px solid transparent;display:flex;align-items:center;gap:.5rem}
+.toast--success{border-left-color:var(--accent)}
+.toast--error{border-left-color:#ef4444}
+.toast .msg{flex:1}
+
+/* Form validation visuals */
+.invalid{box-shadow:0 0 0 3px rgba(239,68,68,.12);border-radius:8px}
+.error-msg{color:#ef4444;font-size:.9rem;margin-top:.25rem}
+

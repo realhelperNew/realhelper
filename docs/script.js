@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Toast utility ---
+  const toastContainer = document.getElementById('toast-container');
+  function showToast(message, type = 'success', timeout = 4500){
+    if (!toastContainer) return;
+    const el = document.createElement('div');
+    el.className = `toast toast--${type}`;
+    el.innerHTML = `<div class="msg">${message}</div><button class="toast-close" aria-label="إغلاق">×</button>`;
+    const closeBtn = el.querySelector('.toast-close');
+    closeBtn.addEventListener('click', ()=>{ el.remove(); });
+    toastContainer.appendChild(el);
+    setTimeout(()=>{ el.remove(); }, timeout);
+  }
+
+  // Field validation helpers
+  function validateEmail(email){ return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email); }
+  function showFieldError(field, message){
+    if (!field) return;
+    field.classList.add('invalid');
+    let next = field.nextElementSibling;
+    if (!next || !next.classList || !next.classList.contains('error-msg')){
+      next = document.createElement('div'); next.className = 'error-msg'; field.after(next);
+    }
+    next.textContent = message;
+  }
+  function clearFieldError(field){
+    if (!field) return;
+    field.classList.remove('invalid');
+    const next = field.nextElementSibling;
+    if (next && next.classList && next.classList.contains('error-msg')) next.remove();
+  }
   // Typing effect for hero
   const typedEl = document.getElementById('typed');
   const words = ['أدوات تساعدك', 'تسهل عملك', 'تُطوِّر نشاطك'];
@@ -24,8 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const email = emailInput.value.trim();
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      msg.textContent = 'الرجاء إدخال بريد إلكتروني صالح';
+    clearFieldError(emailInput);
+    if (!validateEmail(email)) {
+      showFieldError(emailInput, 'الرجاء إدخال بريد إلكتروني صالح');
+      emailInput.focus();
       return;
     }
     try {
@@ -33,15 +65,18 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ email })
       });
       const data = await res.json();
-      msg.textContent = data.message || (data.ok ? 'تم التسجيل بنجاح' : 'حصل خطأ');
-      if (data.ok) { emailInput.value = ''; }
-        if (data.ok){
-          try{ localStorage.setItem('realhelper_email', email); loadProfile(email); }catch(e){}
-        }
+      const text = data.message || (data.ok ? 'تم التسجيل بنجاح' : 'حصل خطأ');
+      msg.textContent = text;
+      showToast(text, data.ok ? 'success' : 'error');
+      if (data.ok) { emailInput.value = ''; try{ localStorage.setItem('realhelper_email', email); loadProfile(email); }catch(e){} }
     } catch (err) {
       msg.textContent = 'فشل الاتصال بالخادم';
+      showToast('فشل الاتصال بالخادم', 'error');
     }
   });
+
+  // validate on blur for subscribe
+  emailInput.addEventListener('blur', ()=>{ clearFieldError(emailInput); if (emailInput.value && !validateEmail(emailInput.value)) showFieldError(emailInput, 'البريد الإلكتروني غير صالح'); });
 
   // Load profile and show in UI if email stored or provided
   const profileArea = document.getElementById('profile-area');
@@ -107,8 +142,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const details = document.getElementById('r-details').value.trim();
       const desired = document.getElementById('r-desired').value.trim();
       const undesired = document.getElementById('r-undesired').value.trim();
-      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
-        reqResult.textContent = 'الرجاء إدخال بريد إلكتروني صالح للمتابعة';
+      // clear previous
+      clearFieldError(document.getElementById('r-email'));
+      if (!validateEmail(email)){
+        showFieldError(document.getElementById('r-email'), 'الرجاء إدخال بريد إلكتروني صالح للمتابعة');
         return;
       }
       const sends = Array.from(reqForm.querySelectorAll('input[name="send_to"]:checked')).map(n=>n.value);
@@ -116,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try{
         const r = await fetch('/api/request', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) });
         const data = await r.json();
-        if (!data.ok) return reqResult.textContent = data.error || 'فشل إرسال الطلب';
+        if (!data.ok){ reqResult.textContent = data.error || 'فشل إرسال الطلب'; showToast(data.error || 'فشل إرسال الطلب','error'); return }
         // show links
         const links = data.links || {};
         const parts = [];
@@ -124,11 +161,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (links.twitter) parts.push(`<a href="${links.twitter}" target="_blank" rel="noopener">مشاركة عبر تويتر</a>`);
         if (links.tiktok) parts.push(`<div><strong>تيك توك:</strong><div>${links.tiktok.note}</div><pre style="white-space:pre-wrap">${escapeHtml(links.tiktok.text)}</pre></div>`);
         reqResult.innerHTML = parts.length ? parts.join(' · ') : 'تم حفظ الطلب بنجاح';
+        showToast('تم حفظ الطلب بنجاح','success');
         reqForm.reset();
       }catch(err){
         reqResult.textContent = 'فشل الاتصال بالخادم';
+        showToast('فشل الاتصال بالخادم','error');
       }
     });
+    // validate email on blur
+    const rEmail = document.getElementById('r-email');
+    if (rEmail) rEmail.addEventListener('blur', ()=>{ clearFieldError(rEmail); if (rEmail.value && !validateEmail(rEmail.value)) showFieldError(rEmail,'البريد الإلكتروني غير صالح') });
   }
 
   function escapeHtml(s){
