@@ -78,4 +78,17 @@ npm run dev
 - `POST /api/subscribe`  — سجل بريدًا إلكترونيًا (جسم: { "email": "..." })
 - `GET /api/testimonials` — استرجاع شهادات اختبارية
 
-ملاحظة: البيانات تُخزَّن في الذاكرة لأغراض العرض فقط. يمكنك توسيع التخزين بسهولة لقاعدة بيانات أو خدمة بريدية.
+ملاحظة: المشتركين الآن يُخزَّنُون في قاعدة بيانات SQLite محلية (`data.db`). هناك تكامل اختياري مع SendGrid لإرسال رسائل تأكيد إذا وضعت متغير البيئة `SENDGRID_API_KEY`.
+
+بيئة اختيارية:
+
+- `SENDGRID_API_KEY` — مفتاح API الخاص بـ SendGrid لإرسال تأكيدات البريد.
+- `SENDGRID_FROM` — البريد المُرسِل الافتراضي (مثل `noreply@yourdomain.com`).
+
+لتشغيل مع SendGrid (اختياري):
+
+```bash
+export SENDGRID_API_KEY=your_key_here
+export SENDGRID_FROM=you@domain.com
+npm start
+```
