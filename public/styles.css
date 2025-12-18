@@ -1,0 +1,19 @@
+:root{--accent:#3b82f6;--bg:#0f172a;--muted:#94a3b8}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Naskh Arabic",sans-serif;margin:0;color:#0b1220;background:#f7fafc}
+.container{max-width:1100px;margin:0 auto;padding:2rem}
+.hero{background:linear-gradient(120deg,#0ea5a4 0%,#3b82f6 100%);color:white;padding:4rem 0}
+.title{font-size:2.25rem;margin:0 0 .5rem}
+.subtitle{margin:0 0 1.5rem;color:rgba(255,255,255,.9)}
+.subscribe{display:flex;gap:.5rem;max-width:540px}
+.subscribe input{flex:1;padding:.75rem;border-radius:8px;border:0}
+.subscribe button{background:rgba(0,0,0,.15);color:white;border:0;padding:.75rem 1rem;border-radius:8px;cursor:pointer}
+.muted{color:rgba(255,255,255,.9);margin-top:.5rem}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:2rem}
+.features article{background:white;padding:1.25rem;border-radius:8px;box-shadow:0 6px 18px rgba(15,23,42,.06)}
+.testimonials{margin:3rem 0}
+.carousel{display:flex;align-items:center;gap:1rem}
+.carousel .slide{flex:1;background:white;padding:1.25rem;border-radius:8px;min-height:88px;display:flex;align-items:center;justify-content:center}
+.nav{background:transparent;border:1px solid var(--muted);border-radius:6px;padding:.5rem .75rem;cursor:pointer}
+.footer{background:#fff;padding:1rem 0;margin-top:4rem;color:#475569;border-top:1px solid #e6eef8}
+@media (max-width:600px){.title{font-size:1.5rem}.subscribe{flex-direction:column}.subscribe button{width:100%}}
