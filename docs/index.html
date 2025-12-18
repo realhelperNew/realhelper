@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RealHelper — صفحة هبوط</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <nav class="topnav" aria-label="التنقل الرئيسي">
+        <a href="/">الرئيسية</a>
+        <a href="/pricing.html">الأسعار</a>
+        <a href="/faq.html">الأسئلة الشائعة</a>
+      </nav>
+      <h1 class="title">RealHelper — <span id="typed">أدوات تساعدك</span></h1>
+      <p class="subtitle">حلول بسيطة ومتكاملة لتنمية أعمالك وتسهيل إدارة المهمات.</p>
+
+      <form id="subscribe-form" class="subscribe" novalidate>
+        <input id="email" name="email" type="email" placeholder="أدخل بريدك الإلكتروني" required />
+        <button type="submit">سجل الآن</button>
+      </form>
+
+      <p id="subscribe-msg" class="muted"></p>
+      <div id="profile-area" style="margin-top:.5rem;font-weight:600"></div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="features">
+      <article>
+        <h3>أتمتة ذكية</h3>
+        <p>توفير الوقت بتدفقات عمل قابلة للتخصيص.</p>
+      </article>
+      <article>
+        <h3>لوحة تحكم مباشرة</h3>
+        <p>تحليل الأداء واتخاذ قرارات سريعة.</p>
+      </article>
+      <article>
+        <h3>دعم مستمر</h3>
+        <p>فريق دعم جاهز لمساعدتك 24/7.</p>
+      </article>
+    </section>
+
+    <section class="request-section" style="margin-top:2rem">
+      <h2>أرسل طلبًا مفصلاً</h2>
+      <form id="request-form" class="subscribe" novalidate>
+        <input id="r-name" name="name" type="text" placeholder="الاسم (اختياري)" />
+        <input id="r-email" name="email" type="email" placeholder="بريدك الإلكتروني" required />
+        <input id="r-budget" name="budget" type="text" placeholder="الميزانية (مثلاً: $200)" />
+        <input id="r-timing" name="timing" type="text" placeholder="التوقيت (مثلاً: خلال أسبوع)" />
+        <input id="r-location" name="location" type="text" placeholder="المكان (اختياري)" />
+        <textarea id="r-details" name="details" rows="4" placeholder="وصف الطلب التفصيلي"></textarea>
+        <input id="r-desired" name="desired_details" type="text" placeholder="التفاصيل الإضافية المرغوبة" />
+        <input id="r-undesired" name="undesired_details" type="text" placeholder="التفاصيل الإضافية غير المرغوبة" />
+
+        <fieldset style="border:0;padding:0;margin-top:.5rem;display:flex;gap:.75rem;flex-wrap:wrap;align-items:center">
+          <legend style="font-weight:600;margin-bottom:.25rem;min-width:100%">قنوات المشاركة</legend>
+          <label><input type="checkbox" name="send_to" value="telegram" /> تلغرام</label>
+          <label><input type="checkbox" name="send_to" value="twitter" /> تويتر</label>
+          <label><input type="checkbox" name="send_to" value="tiktok" /> تيك توك</label>
+        </fieldset>
+
+        <button type="submit">إرسال الطلب ومشاركة</button>
+      </form>
+
+      <div id="request-result" style="margin-top:1rem"></div>
+    </section>
+
+    <section class="testimonials">
+      <h2>ماذا يقول العملاء</h2>
+      <div class="carousel" id="testi-carousel">
+        <button class="nav prev" aria-label="السابق">‹</button>
+        <div class="slide" id="testi-slide">جارٍ التحميل…</div>
+        <button class="nav next" aria-label="التالي">›</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+        <div>تواصل معنا:</div>
+        <a href="https://twitter.com/realhelper_nwo" target="_blank" rel="noopener">تويتر: @realhelper_nwo</a>
+        <a href="https://t.me/R_realhelper" target="_blank" rel="noopener">تلغرام: R_realhelper</a>
+        <a href="https://www.tiktok.com/@real.helper06" target="_blank" rel="noopener">تيك توك: real.helper06</a>
+      </div>
+      <small style="display:block;margin-top:.5rem">&copy; 2025 RealHelper. كل الحقوق محفوظة.</small>
+    </div>
+  </footer>
+
+  <script src="/script.js"></script>
+</body>
+</html>
